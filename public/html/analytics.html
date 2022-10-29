@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Botanique</title>
+  </head>
+  <body>
+    <nav class="nav">
+      <h1>Botanique</h1>
+      <ul class="nav-list">
+        <a href="/" class="nav-list__link">Главная</a>
+        <a href="/analytics" class="nav-list__link nav-list__link--active"
+          >Аналитика</a
+        >
+      </ul>
+      <img
+        src="../assets/images/default-profile-picture.png"
+        alt="Missing"
+        class="nav__profile-picture"
+      />
+    </nav>
+    <div class="container">
+      <main class="main">
+        <div class="analytics-card">
+          <header class="card-header">
+            <div class="card-header__left-col">
+              <img
+                src="../assets/images/ph-meter.png"
+                alt="ph-meter"
+                class="card-header__image"
+              />
+              <div class="card-header__heading">
+                <span
+                  >pH-метр, Mettler Toledo, SevenCompact S220, 00-003054</span
+                >
+                <div class="subscript">
+                  <span>S1.4.I14-9.001</span>
+                  <span>&middot;</span>
+                  <span>00-024004</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-header-settings">
+              <select name="" class="card-header-settings__status select">
+                <option value="">В работе</option>
+              </select>
+              <img
+                src="../assets/svg/favorite.svg"
+                alt="fav button"
+                class="card-header-settings__like-btn"
+              />
+              <img
+                src="../assets/svg/settings.svg"
+                alt="settings button"
+                class="card-header-settings__gear-btn"
+              />
+            </div>
+          </header>
+          <div class="select-and-action">
+            <div class="select-and-action__select">
+              <span>Работа прибора</span>
+              <img src="../assets/svg/arrow_drop_down.svg" alt="" />
+            </div>
+            <div class="select-and-action__actions">
+              <button class="btn btn--clock">
+                <img src="../assets/svg/alarm_on.svg" alt="" />
+              </button>
+              <button class="btn btn--save">
+                <p class="save-btn-txt">Сохранить в pdf</p>
+                <img src="../assets/svg/more_vert.svg" alt="" />
+              </button>
+            </div>
+          </div>
+          <div class="dates">
+            <input type="datetime-local" />
+            <img src="../assets/svg/arrow_forward.svg" alt="" />
+            <input id="datetime" type="datetime-local" />
+          </div>
+          <ul class="intervals">
+            <li class="intervals__interval">День</li>
+            <li class="intervals__interval">Неделя</li>
+            <li class="intervals__interval">2 Недели</li>
+            <li class="intervals__interval">Месяц</li>
+            <li class="intervals__interval">3 месяца</li>
+            <li class="intervals__interval">Полгода</li>
+          </ul>
+          <div class="table">
+            <header class="table__header table-grid">
+              <p>Начало</p>
+              <p>Тип работ</p>
+              <p>Работы</p>
+              <p>Результат</p>
+              <p>Пользователь</p>
+            </header>
+            <!-- <div class="table-item table-grid">
+              <p class="table-item__start cell">09.10.2021, 15:46</p>
+              <div class="type cell">
+                <p class="type__green">В работе</p>
+                <p class="type__bold">Измерение</p>
+              </div>
+              <p class="cell">
+                <span class="work__bold">Образец/серия:</span>
+                000100057935_170000010325_0000251849
+              </p>
+              <div class="results cell">
+                <div class="inner">
+                  <img src="../assets/svg/check.svg" alt="" />
+                </div>
+              </div>
+              <p class="user cell">morozovava</p>
+            </div>
+            <div class="table-item table-grid">
+              <p class="table-item__start cell">12.10.2021, 12:17</p>
+              <div class="type cell">
+                <p class="type__green">В работе</p>
+                <p class="type__bold">Калибровка</p>
+              </div>
+              <p class="cell">
+                <span class="work__bold">Номер колонки:</span> Колонка 2<br />
+                <span class="work__bold">Образец:</span> Образец 2<br />
+                <span class="work__bold">Образец:</span> образец 1<br />
+                <span class="work__bold">Метод:</span> метод тестовый
+              </p>
+              <div class="results cell">
+                <div class="inner">
+                  <p>Промывка с указанием вещества: Вещество<br />...</p>
+                  <img src="../assets/svg/check.svg" alt="" />
+                </div>
+              </div>
+              <p class="user cell">morozovava</p>
+            </div> -->
+          </div>
+        </div>
+      </main>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script defer src="../js/analytics.js" type="module"></script>
+  </body>
+</html>
