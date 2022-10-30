@@ -14,7 +14,7 @@
   line-height: 150%;
   padding: 1.6rem;
   margin-bottom: 4.8rem;
-  color: #000;
+  color: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 4px;
 }
@@ -136,8 +136,8 @@
 }
 
 .notif-btn {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .notif-btn:hover {

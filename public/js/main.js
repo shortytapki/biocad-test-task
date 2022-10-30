@@ -97,6 +97,7 @@ const handleSearch = async (e) => {
                       </div>
                     </li>`;
       devicesList.insertAdjacentHTML('beforeend', tmpl);
+      addNotifHandlers();
     });
   };
 
@@ -128,26 +129,30 @@ const handleSearch = async (e) => {
 
 searchBar.addEventListener('input', (e) => handleSearch(e));
 
-document.querySelectorAll('.notif-btn').forEach((btn) => {
-  btn.addEventListener('click', async () => {
-    const id = btn.getAttribute('id');
-    const type = btn.getAttribute('type');
-    const docRef = doc(db, 'devices', id);
-    if (type === 'unset') {
-      btn.setAttribute('type', 'active');
-      btn.setAttribute('src', '../assets/svg/notif_active.svg');
-      await setDoc(docRef, { notifications: 'active' }, { merge: true });
-    } else if (type === 'active') {
-      btn.setAttribute('type', 'disabled');
-      btn.setAttribute('src', '../assets/svg/notif_disabled.svg');
-      await setDoc(docRef, { notifications: 'disabled' }, { merge: true });
-    } else {
-      btn.setAttribute('type', 'unset');
-      btn.setAttribute('src', '../assets/svg/notif_unset.svg');
-      await setDoc(docRef, { notifications: 'unset' }, { merge: true });
-    }
+const addNotifHandlers = () => {
+  document.querySelectorAll('.notif-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('id');
+      const type = btn.getAttribute('type');
+      const docRef = doc(db, 'devices', id);
+      if (type === 'unset') {
+        btn.setAttribute('type', 'active');
+        btn.setAttribute('src', '../assets/svg/notif_active.svg');
+        await setDoc(docRef, { notifications: 'active' }, { merge: true });
+      } else if (type === 'active') {
+        btn.setAttribute('type', 'disabled');
+        btn.setAttribute('src', '../assets/svg/notif_disabled.svg');
+        await setDoc(docRef, { notifications: 'disabled' }, { merge: true });
+      } else {
+        btn.setAttribute('type', 'unset');
+        btn.setAttribute('src', '../assets/svg/notif_unset.svg');
+        await setDoc(docRef, { notifications: 'unset' }, { merge: true });
+      }
+    });
   });
-});
+};
+
+addNotifHandlers();
 
 const openAnalytics = (id) => {
   const doc = data.filter((item) => item.id === id).at(0);
