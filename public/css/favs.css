@@ -14,7 +14,7 @@
   line-height: 150%;
   padding: 1.6rem;
   margin-bottom: 4.8rem;
-  color: rgba(0, 0, 0, 0.38);
+  color: #000;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 4px;
 }
@@ -33,4 +33,113 @@
   width: 2rem;
   height: 2rem;
   background: url('../assets/svg/qr.svg') center / contain no-repeat;
+}
+
+.list-container {
+  width: 92.5rem;
+  margin: 0 auto;
+}
+
+.list-heading {
+  display: flex;
+  gap: 1.6rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.15px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 1.6rem;
+}
+
+.list-wrapper {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.devices {
+  display: flex;
+  height: auto;
+  padding: 0 1.2rem;
+  flex-direction: column;
+}
+
+.devices-header {
+  padding: 1rem 0.8rem 1rem 6.4rem;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.item-heading {
+  display: block;
+  width: 65.6rem;
+}
+
+.row {
+  display: flex;
+  gap: 1.6rem;
+  height: 4.4rem;
+}
+
+.devices-item {
+  padding: 0.8rem 1.2rem 0.7rem;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+  height: 5.6rem;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.devices-item:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+.item-img,
+.svg-container {
+  width: 4rem;
+  height: 4rem;
+}
+
+.svg-container:hover {
+  background-color: #eee;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.item-img {
+  border-radius: 50%;
+}
+
+.item-name {
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: rgba(0, 0, 0, 0.87);
+  width: 65.2rem;
+  padding: 1.2rem 0;
+}
+
+.item-status {
+  padding: 0.2rem 0.4rem 0.2rem 0.8rem;
+  background-color: transparent;
+  width: 9.7rem;
+  height: 2.4rem;
+
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  border-radius: 2px;
+  letter-spacing: 0.25px;
+
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.notif-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.notif-btn:hover {
+  cursor: pointer;
 }
