@@ -41,14 +41,18 @@ data = await getData();
 const defaultTmpl =
   data.length > 0 &&
   data.reduce(
-    (tmpl, { name, imgsrc, notifications, id }) =>
+    (tmpl, { id, name, imgsrc, notifications, status }) =>
       tmpl +
       `<li class="devices-item row" id="${id}">
         <img src="../assets/images/${imgsrc}" alt="" class="item-img" />
         <p class="item-name">${name}</p>
-        <select class="item-status">
-          <option value="Свободен">Свободен</option>
-          <option value="В работе">В работе</option>
+        <select class="item-status" id="${id}">
+          <option value="Свободен" ${
+            status === 'free' ? 'selected' : ''
+          }>Свободен</option>
+          <option value="В работе" ${
+            status === 'working' ? 'selected' : ''
+          }>В работе</option>
         </select>
         <div class="svg-container centered">
           <img
@@ -82,7 +86,7 @@ const handleSearch = async (e) => {
       const tmpl = `<li class="devices-item row" id="${id}">
                       <img src="../assets/images/${imgsrc}" alt="" class="item-img" />
                       <p class="item-name">${name}</p>
-                      <select class="item-status">
+                      <select class="item-status" id=${id}>
                         <option value="Свободен">Свободен</option>
                         <option value="В работе">В работе</option>
                       </select>
@@ -130,8 +134,9 @@ const handleSearch = async (e) => {
 searchBar.addEventListener('input', (e) => handleSearch(e));
 
 const addNotifHandlers = () => {
-  document.querySelectorAll('.notif-btn').forEach((btn) => {
-    btn.addEventListener('click', async () => {
+  document.querySelectorAll('.svg-container').forEach((container) => {
+    container.addEventListener('click', async () => {
+      const btn = container.childNodes[1];
       const id = btn.getAttribute('id');
       const type = btn.getAttribute('type');
       const docRef = doc(db, 'devices', id);
@@ -153,6 +158,15 @@ const addNotifHandlers = () => {
 };
 
 addNotifHandlers();
+
+document.querySelectorAll('.item-status').forEach((select) => {
+  select.addEventListener('change', async (e) => {
+    const docRef = doc(db, 'devices', e.target.id);
+    if (e.target.value === 'В работе')
+      await setDoc(docRef, { status: 'working' }, { merge: true });
+    else await setDoc(docRef, { status: 'free' }, { merge: true });
+  });
+});
 
 const openAnalytics = (id) => {
   const doc = data.filter((item) => item.id === id).at(0);

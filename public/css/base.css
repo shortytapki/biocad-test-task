@@ -36,3 +36,16 @@ ul {
   line-height: 2rem;
   color: rgba(0, 0, 0, 0.87);
 }
+
+.item-status {
+  padding: 0.2rem 0.4rem 0.2rem 0.8rem;
+  background-color: transparent;
+  width: 9.7rem;
+  height: 2.4rem;
+
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  border-radius: 2px;
+  letter-spacing: 0.25px;
+
+  color: rgba(0, 0, 0, 0.6);
+}

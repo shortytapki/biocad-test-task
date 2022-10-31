@@ -1,0 +1,79 @@
+.analytics {
+  margin: 5.2rem auto;
+
+  max-width: 108.8rem;
+  min-height: 57.2rem;
+
+  background: #fff;
+
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+    0px 1px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.analytics-header {
+  height: 7.2rem;
+  display: flex;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+}
+
+.header-img-container {
+  padding: 1.6rem;
+  width: 7.2rem;
+}
+
+.header-img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.heading {
+  width: 57.7rem;
+  padding: 1.4rem 0 1.6rem;
+}
+
+.state {
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.4px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.dot {
+  display: inline-block;
+  width: 2.1rem;
+  text-align: center;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4rem;
+
+  letter-spacing: 0.15px;
+
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.settings-container {
+  width: 43.9rem;
+  justify-content: end;
+  display: flex;
+  padding: 0.8rem 0.8rem 0 0;
+}
+
+.settings {
+  height: 4rem;
+  display: flex;
+}
+
+.settings-cell {
+  padding: 0.8rem;
+}
+
+.item-status--analytics {
+  border-color: #23b04a;
+  color: #23b04a;
+}
