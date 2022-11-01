@@ -87,7 +87,7 @@
       </section>
       <div class="intervals-container">
         <ul class="intervals">
-          <li class="interval centered">День</li>
+          <li class="interval centered interval--active">День</li>
           <li class="interval centered">Неделя</li>
           <li class="interval centered">2 Недели</li>
           <li class="interval centered">Месяц</li>
@@ -103,7 +103,7 @@
           <div class="table-cell">Результат</div>
           <div class="table-cell">Пользователь</div>
         </header>
-        <div class="table-row row-ext">
+        <!-- <div class="table-row row-ext">
           <div class="table-cell">09.10.2021, 15:46</div>
           <div class="table-cell">
             <p>В работе</p>
@@ -111,14 +111,16 @@
           </div>
           <div class="table-cell">
             <ul>
-              <li>
+              <li class="work-item">
                 <strong>Образец/серия: </strong
                 >000100057935_170000010325_0000251849
               </li>
             </ul>
           </div>
           <div class="table-cell">
-            <img src="../assets/svg/check.svg" alt="" />
+            <div class="res-inner">
+              <img src="../assets/svg/check.svg" alt="" class="res-check" />
+            </div>
           </div>
           <div class="table-cell">morozovava</div>
         </div>
@@ -138,11 +140,15 @@
             </ul>
           </div>
           <div class="table-cell">
-            <img src="../assets/svg/check.svg" alt="" />
+            <div class="res-inner">
+              Промывка с указанием вещества: Вещество ...
+              <img src="../assets/svg/check.svg" alt="" class="res-check" />
+            </div>
           </div>
           <div class="table-cell">morozovava</div>
-        </div>
+        </div> -->
       </section>
     </main>
+    <script defer src="../js/analytics.js" type="module"></script>
   </body>
 </html>

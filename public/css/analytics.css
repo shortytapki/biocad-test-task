@@ -191,6 +191,10 @@ h1 {
   background: rgba(33, 33, 33, 0.15);
 }
 
+.interval--active {
+  background-color: #c2e7c8;
+}
+
 .table {
   width: 100%;
   padding: 1.2rem 1.6rem;
@@ -221,6 +225,11 @@ h1 {
   padding: 1.2rem;
 }
 
+.table-cell strong {
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .table-cell:first-child {
   width: 16rem;
 }
@@ -229,10 +238,24 @@ h1 {
   width: 13rem;
 }
 
+.table-cell:nth-child(2) p {
+  color: #23b04a;
+}
+
 .table-cell:nth-child(3) {
   width: 48.6rem;
 }
 
 .table-cell:nth-child(4) {
   width: 14rem;
+}
+
+.res-inner {
+  position: relative;
+}
+
+.res-check {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
