@@ -190,3 +190,49 @@ h1 {
   cursor: pointer;
   background: rgba(33, 33, 33, 0.15);
 }
+
+.table {
+  width: 100%;
+  padding: 1.2rem 1.6rem;
+}
+
+.table-row {
+  border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+  display: flex;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2rem;
+
+  letter-spacing: 0.25px;
+
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.row-ext {
+  min-height: 12.4rem;
+}
+
+.table-header {
+  max-height: 4.4rem;
+}
+
+.table-cell {
+  padding: 1.2rem;
+}
+
+.table-cell:first-child {
+  width: 16rem;
+}
+
+.table-cell:nth-child(2) {
+  width: 13rem;
+}
+
+.table-cell:nth-child(3) {
+  width: 48.6rem;
+}
+
+.table-cell:nth-child(4) {
+  width: 14rem;
+}
