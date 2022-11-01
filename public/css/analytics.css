@@ -77,3 +77,116 @@ h1 {
   border-color: #23b04a;
   color: #23b04a;
 }
+
+.select-and-action {
+  height: 6.4rem;
+  padding: 1.2rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.select--save {
+  width: 16.8rem;
+  height: 2.4rem;
+  border: none;
+
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+
+  letter-spacing: 0.5px;
+
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #fff;
+}
+
+.action {
+  height: 100%;
+  display: flex;
+  gap: 2.4rem;
+}
+
+.action-btn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+
+  background-color: #fff;
+  padding: 0.8rem;
+  height: 100%;
+  width: 4rem;
+}
+
+.action-btn:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.save-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-transform: uppercase;
+  width: 19.2rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: #23b04a;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  letter-spacing: 1.25px;
+  padding: 0.8rem 0.8rem 0.8rem 1.6rem;
+}
+
+.save-btn-menu {
+  border-left: 1px solid #c2e7c8;
+}
+
+.save-btn-menu img {
+  margin-left: 0.4rem;
+}
+
+.dates {
+  display: flex;
+  gap: 1.2rem;
+  height: 5.6rem;
+  padding: 0.8rem 1.6rem;
+  align-items: center;
+}
+
+.dates input {
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  min-width: 18rem;
+  padding: 1rem 0.8rem;
+}
+
+.intervals-container {
+  height: 6rem;
+  padding: 0.8rem 1.6rem;
+}
+
+.intervals {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.interval {
+  border-radius: 100px;
+  background: rgba(33, 33, 33, 0.08);
+  padding: 0.6rem 1.2rem;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2rem;
+
+  letter-spacing: 0.25px;
+
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.interval:hover {
+  cursor: pointer;
+  background: rgba(33, 33, 33, 0.15);
+}
