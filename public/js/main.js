@@ -67,13 +67,15 @@ const defaultTmpl =
 const devicesList = document.querySelector('.devices');
 devicesList.insertAdjacentHTML('beforeend', defaultTmpl);
 
-document.querySelectorAll('.devices-item').forEach((item) => {
-  const id = item.getAttribute('id');
-  item.addEventListener('click', (e) => {
-    e.stopImmediatePropagation();
-    // openAnalytics(id);
+const addOpenAnalytics = () => {
+  document.querySelectorAll('.item-name').forEach((item) => {
+    const id = item.getAttribute('id');
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openAnalytics(id);
+    });
   });
-});
+};
 
 const handleSearch = async (e) => {
   data = await getData();
@@ -99,6 +101,7 @@ const handleSearch = async (e) => {
                     </li>`;
       devicesList.insertAdjacentHTML('beforeend', tmpl);
       addNotifHandlers();
+      addOpenAnalytics();
     });
   };
 
@@ -107,6 +110,8 @@ const handleSearch = async (e) => {
   const query = e.target.value;
   if (query === '') {
     devicesList.innerHTML = defaultTmpl;
+    addNotifHandlers();
+    addOpenAnalytics();
     return;
   }
   if (parseInt(query)) {
@@ -155,9 +160,11 @@ const addNotifHandlers = () => {
 };
 
 addNotifHandlers();
+addOpenAnalytics();
 
 document.querySelectorAll('.item-status').forEach((select) => {
   select.addEventListener('change', async (e) => {
+    e.stopImmediatePropagation();
     const docRef = doc(db, 'devices', e.target.id);
     if (e.target.value === 'В работе')
       await setDoc(docRef, { status: 'working' }, { merge: true });
@@ -166,8 +173,6 @@ document.querySelectorAll('.item-status').forEach((select) => {
 });
 
 const openAnalytics = (id) => {
-  const doc = data.filter((item) => item.id === id).at(0);
-  const analyticsData = JSON.parse(doc.analytics);
-  localStorage.setItem(id, JSON.stringify(analyticsData));
+  localStorage.setItem('fromMain', id);
   window.open('/analytics', '_self');
 };

@@ -191,7 +191,8 @@ h1 {
   background: rgba(33, 33, 33, 0.15);
 }
 
-.interval--active {
+.interval--active,
+.interval--active:hover {
   background-color: #c2e7c8;
 }
 

@@ -49,3 +49,7 @@ ul {
 
   color: rgba(0, 0, 0, 0.6);
 }
+
+.item-status:hover {
+  cursor: pointer;
+}

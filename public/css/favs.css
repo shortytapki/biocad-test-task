@@ -92,7 +92,7 @@
   transition: all 0.2s ease;
 }
 
-.devices-item:hover {
+.item-name:hover {
   cursor: pointer;
   background-color: #ccc;
 }
