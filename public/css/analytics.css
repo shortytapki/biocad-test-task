@@ -255,6 +255,10 @@ h1 {
   position: relative;
 }
 
+.res-inner p {
+  max-width: 10.2rem;
+}
+
 .res-check {
   position: absolute;
   right: 0;

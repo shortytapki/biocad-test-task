@@ -112,14 +112,11 @@ const renderActionList = (actions) => {
   const startDate = new Date(startpoint.value);
   const endDate = new Date(endpoint.value);
 
-  const filteredActions = actions.filter(({ start }) => {
-    console.log(start.seconds * 1000);
-    console.log(startDate.getTime());
-    return (
+  const filteredActions = actions.filter(
+    ({ start }) =>
       start.seconds * 1000 >= startDate.getTime() &&
       start.seconds * 1000 <= endDate.getTime()
-    );
-  });
+  );
 
   if (filteredActions.length === 0) {
     notFoundDiv.innerText = 'Работ в указанном промежутке на найдено.';
@@ -127,10 +124,11 @@ const renderActionList = (actions) => {
   }
 
   filteredActions.forEach((action) => {
-    const { start, typemap, tasklist, result, user } = action;
+    const { start, worktype, finished, tasklist, result, user } = action;
     const renderDate = new Date(start.seconds * 1000);
     const day = renderDate.toLocaleDateString();
     const time = renderDate.toLocaleTimeString().substring(0, 5);
+    const longComment = result.length > 39;
     const taskString = tasklist.reduce(
       (str, task) =>
         (str += `<li><strong>${task.split(':').at(0)}: </strong>${task
@@ -142,8 +140,8 @@ const renderActionList = (actions) => {
     const tmpl = `<div class="table-row row-ext">
                   <div class="table-cell">${day} ${time}</div>
                   <div class="table-cell">
-                    <p>${typemap.working ? 'В работе' : 'Свободен'}</p>
-                    ${typemap.worktype}
+                    <p>${finished ? '' : 'В работе'}</p>
+                    ${worktype}
                   </div>
                   <div class="table-cell">
                     <ul>
@@ -152,7 +150,11 @@ const renderActionList = (actions) => {
                     </div>
                   <div class="table-cell">
                     <div class="res-inner">
-                      ${result}
+                      <p class="comment">${
+                        longComment
+                          ? result.substring(0, 40) + '<br>...'
+                          : result
+                      }<p>
                       <img src="../assets/svg/check.svg" alt="" class="res-check" />
                     </div>
                   </div>
