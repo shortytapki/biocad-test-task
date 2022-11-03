@@ -20,13 +20,21 @@ const firebaseConfig = {
 
 const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(firebase_app);
+const endpoint = document.querySelector('#endpoint');
+const startpoint = document.querySelector('input');
+const docSnaps = await getDocs(collection(db, 'devices'));
+let data = [];
+docSnaps.forEach((snap) => data.push(snap.data()));
+let device = data.at(Math.floor(Math.random() * data.length));
 
-document.querySelector('input').value = new Date()
-  .toISOString()
-  .substring(0, 16);
+const table = document.querySelector('.table');
+const header = document.querySelector('.analytics-header');
+const deviceSelect = document.querySelector('.select--save');
+const notFoundDiv = document.querySelector('.not-found');
+
+startpoint.value = new Date().toISOString().substring(0, 16);
 
 const setInputs = (interval) => {
-  const endpoint = document.querySelector('#endpoint');
   const now = new Date();
 
   if (interval === 'Неделя') {
@@ -81,30 +89,91 @@ intervals.forEach((interval) => {
   });
 });
 
-const docSnaps = await getDocs(collection(db, 'devices'));
+deviceSelect.insertAdjacentHTML(
+  'beforeend',
+  data.map(({ name, id }) => `<option data-id="${id}">${name}</option>`)
+);
 
-let data = [];
+deviceSelect.addEventListener('change', (e) => {
+  if (e.target.value !== 'Работа прибора') {
+    device = data.filter(({ name }) => e.target.value === name).at(0);
+    renderPage(device);
+  }
+});
 
-docSnaps.forEach((snap) => data.push(snap.data()));
+document.querySelectorAll('input').forEach((input) => {
+  input.addEventListener('change', () => {
+    renderActionList(device.actions);
+  });
+});
 
-console.log(data);
+const renderActionList = (actions) => {
+  table.querySelectorAll('.row-ext').forEach((row) => table.removeChild(row));
+  const startDate = new Date(startpoint.value);
+  const endDate = new Date(endpoint.value);
 
-const device = data.at(Math.floor(Math.random() * data.length));
+  const filteredActions = actions.filter(({ start }) => {
+    console.log(start.seconds * 1000);
+    console.log(startDate.getTime());
+    return (
+      start.seconds * 1000 >= startDate.getTime() &&
+      start.seconds * 1000 <= endDate.getTime()
+    );
+  });
 
-const actions = device?.actions;
+  if (filteredActions.length === 0) {
+    notFoundDiv.innerText = 'Работ в указанном промежутке на найдено.';
+    return;
+  }
 
-const table = document.querySelector('.table');
-const header = document.querySelector('.analytics-header');
+  filteredActions.forEach((action) => {
+    const { start, typemap, tasklist, result, user } = action;
+    const renderDate = new Date(start.seconds * 1000);
+    const day = renderDate.toLocaleDateString();
+    const time = renderDate.toLocaleTimeString().substring(0, 5);
+    const taskString = tasklist.reduce(
+      (str, task) =>
+        (str += `<li><strong>${task.split(':').at(0)}: </strong>${task
+          .split(':')
+          .at(1)}</li>`),
+      ''
+    );
 
-const { name, imgsrc, status } = device;
-header.innerHTML = `<div class="header-img-container">
+    const tmpl = `<div class="table-row row-ext">
+                  <div class="table-cell">${day} ${time}</div>
+                  <div class="table-cell">
+                    <p>${typemap.working ? 'В работе' : 'Свободен'}</p>
+                    ${typemap.worktype}
+                  </div>
+                  <div class="table-cell">
+                    <ul>
+                      ${taskString}
+                    </ul>
+                    </div>
+                  <div class="table-cell">
+                    <div class="res-inner">
+                      ${result}
+                      <img src="../assets/svg/check.svg" alt="" class="res-check" />
+                    </div>
+                  </div>
+                  <div class="table-cell">${user}</div>
+                </div>`;
+    table.insertAdjacentHTML('beforeend', tmpl);
+    notFoundDiv.innerText = '';
+  });
+};
+
+const renderPage = (device) => {
+  const actions = device?.actions;
+  const { name, imgsrc, status } = device;
+  header.innerHTML = `<div class="header-img-container">
                       <img src="../assets/images/${imgsrc}" alt="" class="header-img" />
                     </div>
                     <div class="heading">
-                    <h1>${name}</h1>
-                    <span class="state">S1.4.I14-9.001</span>
-                    <span class="state dot">&middot;</span>
-                    <span class="state">00-024004</span>
+                      <h1>${name}</h1>
+                      <span class="state">S1.4.I14-9.001</span>
+                      <span class="state dot">&middot;</span>
+                      <span class="state">00-024004</span>
                     </div>
                     <div class="settings-container">
                     <ul class="settings">
@@ -127,44 +196,12 @@ header.innerHTML = `<div class="header-img-container">
                     </ul>
                   </div>`;
 
-if (actions) {
-  actions.forEach((action) => {
-    const { start, typemap, tasklist, result, user } = action;
-    const startDate = new Date(start.seconds * 1000);
-    const day = startDate.toLocaleDateString();
-    const time = startDate.toLocaleTimeString().substring(0, 5);
-    const taskString = tasklist.reduce(
-      (str, task) =>
-        (str += `<li><strong>${task.split(':').at(0)}: </strong>${task
-          .split(':')
-          .at(1)}</li>`),
-      ''
-    );
+  if (actions) {
+    renderActionList(actions);
+  } else {
+    notFoundDiv.innerText = 'Работ в указанном промежутке на найдено.';
+  }
+};
 
-    const tmpl = `<div class="table-row row-ext">
-                    <div class="table-cell">${day} ${time}</div>
-                    <div class="table-cell">
-                      <p>${typemap.working ? 'В работе' : 'Свободен'}</p>
-                      ${typemap.worktype}
-                    </div>
-                    <div class="table-cell">
-                      <ul>
-                        ${taskString}
-                      </ul>
-                      </div>
-                    <div class="table-cell">
-                      <div class="res-inner">
-                        ${result}
-                        <img src="../assets/svg/check.svg" alt="" class="res-check" />
-                      </div>
-                    </div>
-                    <div class="table-cell">${user}</div>
-                  </div>`;
-    table.insertAdjacentHTML('beforeend', tmpl);
-  });
-} else {
-  table.insertAdjacentHTML(
-    'beforeend',
-    '<div class="centered" style="margin-top: 3rem; font-size: 3rem">Работ в указанном промежутке на найдено.</div>'
-  );
-}
+setInputs();
+renderPage(device);
