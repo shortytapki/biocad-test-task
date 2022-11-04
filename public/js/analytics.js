@@ -3,13 +3,10 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.1/firebas
 import {
   getFirestore,
   getDocs,
-  getDoc,
   collection,
-  doc,
-  setDoc,
 } from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js';
 
-const firebaseConfig = {
+const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyD8nIJYkgOw7gKvPNH2fOAdeTwBxKLF48w',
   authDomain: 'botanique-b5560.firebaseapp.com',
   projectId: 'botanique-b5560',
@@ -18,7 +15,7 @@ const firebaseConfig = {
   appId: '1:224487105371:web:21d94dbe9bec79fcf5307e',
 };
 
-const firebase_app = initializeApp(firebaseConfig);
+const firebase_app = initializeApp(FIREBASE_CONFIG);
 const db = getFirestore(firebase_app);
 const endpoint = document.querySelector('#endpoint');
 const startpoint = document.querySelector('input');
@@ -207,3 +204,9 @@ const renderPage = (device) => {
 
 setInputs();
 renderPage(device);
+
+document.querySelector('.save-btn').addEventListener('click', () => {
+  console.log('here');
+  const element = document.querySelector('.analytics');
+  html2pdf(element);
+});

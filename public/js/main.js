@@ -1,73 +1,77 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js';
-
-import {
-  getFirestore,
-  getDocs,
-  collection,
-  doc,
-  setDoc,
-} from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyD8nIJYkgOw7gKvPNH2fOAdeTwBxKLF48w',
-  authDomain: 'botanique-b5560.firebaseapp.com',
-  projectId: 'botanique-b5560',
-  storageBucket: 'botanique-b5560.appspot.com',
-  messagingSenderId: '224487105371',
-  appId: '1:224487105371:web:21d94dbe9bec79fcf5307e',
-};
-
-const firebase_app = initializeApp(firebaseConfig);
-const db = getFirestore(firebase_app);
-
-let data = [];
+/* INITIAL RENDERING */
 const searchBar = document.querySelector('#searchbar');
 searchBar.value = '';
 
 const getData = async () => {
-  const data = [];
-  const querySnapshot = await getDocs(collection(db, 'devices'));
-  querySnapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-  return data;
+  const res = await fetch('/api/main-db');
+  return await res.json();
 };
 
-data = await getData();
+let data = await getData();
 
-const defaultTmpl =
-  data.length > 0 &&
-  data.reduce(
-    (tmpl, { id, name, imgsrc, notifications, status }) =>
-      tmpl +
-      `<li class="devices-item row" id="${id}">
-        <img src="../assets/images/${imgsrc}" alt="" class="item-img" />
-        <p class="item-name">${name}</p>
-        <select class="item-status" id="${id}">
-          <option value="Свободен" ${
-            status === 'free' ? 'selected' : ''
-          }>Свободен</option>
-          <option value="В работе" ${
-            status === 'working' ? 'selected' : ''
-          }>В работе</option>
-        </select>
-        <div class="svg-container centered">
-          <img
-            src="../assets/svg/notif_${notifications}.svg"
-            alt=""
-            class="notif-btn"
-            id="${id}"
-            type=${notifications}
-          />
-      </div>
-    </li>`,
-    ''
-  );
-
+const generateDefaultTmpl = (data) => {
+  const defaultTmpl =
+    data.length > 0 &&
+    data.reduce(
+      (tmpl, { id, name, imgsrc, notifications, status }) =>
+        tmpl +
+        `<li class="devices-item row" id="${id}">
+          <img src="../assets/images/${imgsrc}" alt="" class="item-img" />
+          <p class="item-name">${name}</p>
+          <select class="item-status" id="${id}">
+            <option value="Свободен" ${
+              status === 'free' ? 'selected' : ''
+            }>Свободен</option>
+            <option value="В работе" ${
+              status === 'working' ? 'selected' : ''
+            }>В работе</option>
+          </select>
+          <div class="svg-container centered">
+            <img
+              src="../assets/svg/notif_${notifications}.svg"
+              alt=""
+              class="notif-btn"
+              id="${id}"
+              type=${notifications}
+            />
+        </div>
+      </li>`,
+      ''
+    );
+  return defaultTmpl;
+};
 const devicesList = document.querySelector('.devices');
-devicesList.insertAdjacentHTML('beforeend', defaultTmpl);
+devicesList.insertAdjacentHTML('beforeend', generateDefaultTmpl(data));
+
+const setNotif = async (type, id) => await fetch(`/api/${type}${id}`);
+const addNotifHandlers = () => {
+  document.querySelectorAll('.svg-container').forEach((container) => {
+    container.addEventListener('click', async () => {
+      const btn = container.childNodes[1];
+      const id = btn.getAttribute('id');
+      const type = btn.getAttribute('type');
+      if (type === 'unset') {
+        btn.setAttribute('type', 'active');
+        btn.setAttribute('src', '../assets/svg/notif_active.svg');
+        await setNotif('active', id);
+      } else if (type === 'active') {
+        btn.setAttribute('type', 'disabled');
+        btn.setAttribute('src', '../assets/svg/notif_disabled.svg');
+        await setNotif('disabled', id);
+      } else {
+        btn.setAttribute('type', 'unset');
+        btn.setAttribute('src', '../assets/svg/notif_unset.svg');
+        await setNotif('unset', id);
+      }
+    });
+  });
+};
 
 const addOpenAnalytics = () => {
+  const openAnalytics = (id) => {
+    localStorage.setItem('fromMain', id);
+    window.open('/analytics', '_self');
+  };
   document.querySelectorAll('.item-name').forEach((item) => {
     const id = item.getAttribute('id');
     item.addEventListener('click', (e) => {
@@ -77,6 +81,10 @@ const addOpenAnalytics = () => {
   });
 };
 
+addNotifHandlers();
+addOpenAnalytics();
+
+/* RENDERING THE SEARCH RESULTS */
 const handleSearch = async (e) => {
   data = await getData();
   const updateCart = (items) => {
@@ -108,71 +116,41 @@ const handleSearch = async (e) => {
   devicesList.innerHTML = '';
   let searchResults;
   const query = e.target.value;
+
   if (query === '') {
-    devicesList.innerHTML = defaultTmpl;
+    data = await getData();
+    devicesList.innerHTML = generateDefaultTmpl(data);
     addNotifHandlers();
     addOpenAnalytics();
     return;
   }
+
   if (parseInt(query)) {
     searchResults = data.filter(({ id }) => id === query);
-    console.log(searchResults.length);
     searchResults.length
       ? updateCart(searchResults)
       : (devicesList.innerHTML =
           '<li class="devices-item row centered typo-1">Приборов не найдено</li>');
-
     return;
   }
+
   searchResults = data.filter(({ name }) =>
     name.toLowerCase().includes(query.toLowerCase())
   );
+
   searchResults.length
     ? updateCart(searchResults)
     : (devicesList.innerHTML =
         '<li class="devices-item row centered typo-1">Приборов не найдено</li>');
 };
-
 searchBar.addEventListener('input', (e) => handleSearch(e));
 
-const addNotifHandlers = () => {
-  document.querySelectorAll('.svg-container').forEach((container) => {
-    container.addEventListener('click', async () => {
-      const btn = container.childNodes[1];
-      const id = btn.getAttribute('id');
-      const type = btn.getAttribute('type');
-      const docRef = doc(db, 'devices', id);
-      if (type === 'unset') {
-        btn.setAttribute('type', 'active');
-        btn.setAttribute('src', '../assets/svg/notif_active.svg');
-        await setDoc(docRef, { notifications: 'active' }, { merge: true });
-      } else if (type === 'active') {
-        btn.setAttribute('type', 'disabled');
-        btn.setAttribute('src', '../assets/svg/notif_disabled.svg');
-        await setDoc(docRef, { notifications: 'disabled' }, { merge: true });
-      } else {
-        btn.setAttribute('type', 'unset');
-        btn.setAttribute('src', '../assets/svg/notif_unset.svg');
-        await setDoc(docRef, { notifications: 'unset' }, { merge: true });
-      }
-    });
-  });
-};
-
-addNotifHandlers();
-addOpenAnalytics();
-
+/* CHANGING THE STATUS OF DEVICES */
+const setStatus = async (state, id) => await fetch(`/api/${state}${id}`);
 document.querySelectorAll('.item-status').forEach((select) => {
   select.addEventListener('change', async (e) => {
     e.stopImmediatePropagation();
-    const docRef = doc(db, 'devices', e.target.id);
-    if (e.target.value === 'В работе')
-      await setDoc(docRef, { status: 'working' }, { merge: true });
-    else await setDoc(docRef, { status: 'free' }, { merge: true });
+    if (e.target.value === 'В работе') await setStatus('working', e.target.id);
+    else await setStatus('free', e.target.id);
   });
 });
-
-const openAnalytics = (id) => {
-  localStorage.setItem('fromMain', id);
-  window.open('/analytics', '_self');
-};
