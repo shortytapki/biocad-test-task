@@ -27,8 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:page', async (req, res) => {
-  const { page } = req.params;
-  page === 'analytics'
+  req.params === 'analytics'
     ? res.sendFile(path.resolve(__dirname, 'public/html', 'analytics.html'))
     : res.sendFile(path.resolve(__dirname, 'public/html', 'error.html'));
 });

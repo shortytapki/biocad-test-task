@@ -17,7 +17,7 @@ const generateDefaultTmpl = (data) => {
         tmpl +
         `<li class="devices-item row" id="${id}">
           <img src="../assets/images/${imgsrc}" alt="" class="item-img" />
-          <p class="item-name">${name}</p>
+          <p class="item-name" id="${id}">${name}</p>
           <select class="item-status" id="${id}">
             <option value="Свободен" ${
               status === 'free' ? 'selected' : ''
@@ -69,7 +69,8 @@ const addNotifHandlers = () => {
 
 const addOpenAnalytics = () => {
   const openAnalytics = (id) => {
-    localStorage.setItem('fromMain', id);
+    sessionStorage.setItem('fromMain', true);
+    sessionStorage.setItem('id', id);
     window.open('/analytics', '_self');
   };
   document.querySelectorAll('.item-name').forEach((item) => {
