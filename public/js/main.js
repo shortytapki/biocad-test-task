@@ -93,7 +93,7 @@ const handleSearch = async (e) => {
       const { name, imgsrc, notifications, id } = item;
       const tmpl = `<li class="devices-item row" id="${id}">
                       <img src="../assets/images/${imgsrc}" alt="" class="item-img" />
-                      <p class="item-name">${name}</p>
+                      <p class="item-name" id=${id}>${name}</p>
                       <select class="item-status" id=${id}>
                         <option value="Свободен">Свободен</option>
                         <option value="В работе">В работе</option>
