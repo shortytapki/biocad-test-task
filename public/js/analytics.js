@@ -1,6 +1,3 @@
-const endpoint = document.querySelector('#endpoint');
-const startpoint = document.querySelector('input');
-
 const getData = async () => {
   const res = await fetch('/api/main-db');
   return await res.json();
@@ -13,6 +10,8 @@ sessionStorage.getItem('fromMain')
   ? (device = data.filter(({ id }) => id === fromMainId).at(0))
   : (device = data.at(Math.floor(Math.random() * data.length)));
 
+const endpoint = document.querySelector('#endpoint');
+const startpoint = document.querySelector('input');
 const table = document.querySelector('.table');
 const header = document.querySelector('.analytics-header');
 const deviceSelect = document.querySelector('.select--save');
