@@ -84,7 +84,6 @@ deviceSelect.insertAdjacentHTML(
 const renderPage = (device) => {
   const actions = device?.actions;
   const { name, imgsrc, status } = device;
-  console.log(name);
   header.innerHTML = `<div class="header-img-container">
                       <img src="../assets/images/${imgsrc}" alt="" class="header-img" />
                     </div>
